@@ -81,7 +81,7 @@ class SmartBedsideSystem:
         """
 
         if angle < 0.0 or angle > 180.0:
-                raise SmartBedsideError("Invalid oxygen valve angle")
+             raise SmartBedsideError("Invalid oxygen valve angle")
 
         duty_cycle = 5.0 + (angle / 180.0) * 5.0
 
@@ -97,4 +97,9 @@ class SmartBedsideSystem:
         Otherwise, fully close the oxygen delivery valve.
         Raises: SmartBedsideError: If the SpO₂ reading is invalid (propagated from read_vital_signs()).
         """
-        # See User Story #5.
+        spo2 = self.read_vital_signs()
+
+        if spo2 < 95:
+            self.set_o2_valve_angle(180.0)
+        else:
+            self.set_o2_valve_angle(0.0)
