@@ -107,10 +107,11 @@ class SmartBedsideSystem:
         patient's blood oxygen saturation (SpO₂).
         If SpO₂ is below 95%, fully open the oxygen delivery valve.
         Otherwise, fully close the oxygen delivery valve.
-        Raises: SmartBedsideError:  the SpO₂ reading is invalid (propagated from read_vital_signs()).
+         the SpO₂ reading is invalid (propagated from read_vital_signs()).
         """
         val = self.read_vital_signs()
         spo2 = val[0]
+
         if spo2 < 90:
             self.set_o2_valve_angle(180.0)
 
