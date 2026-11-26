@@ -59,10 +59,13 @@ class SmartBedsideSystem:
         Activate or deactivate the alarm based on the patient's blood oxygen saturation (SpO₂).
         Raises: SmartBedsideError: If the SpO₂ reading is invalid (propagated from read_vital_signs()).
         """
-        spo2=self.read_vital_signs()
-        if spo2 < 88:
-            GPIO.output(self.BUZZER_PIN, True)
-            self.alarm_on = True
+        val=self.read_vital_signs()
+        spo2=val[0]
+        heart_rate=val[1]
+
+        if spo2 < 88 or heart_rate < 50 or heart_rate > 130:
+             GPIO.output(self.BUZZER_PIN, True)
+             self.alarm_on = True
         else:
             GPIO.output(self.BUZZER_PIN, False)
             self.alarm_on = False
